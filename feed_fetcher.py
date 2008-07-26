@@ -6,7 +6,7 @@ import threading
 import feedparser
 
 class FeedFetcherThread(threading.Thread):
-    def __init__(self, name, url, channel, interval=20):
+    def __init__(self, name, url, channel, interval=60):
         self.name = name
         self.url = url
         self.channel = channel
