@@ -6,9 +6,10 @@ import threading
 import feedparser
 
 class FeedFetcherThread(threading.Thread):
-    def __init__(self, url, protocol, interval=20):
-        self.protocol = protocol
+    def __init__(self, name, url, channel, interval=20):
+        self.name = name
         self.url = url
+        self.channel = channel
         self.interval = interval
         self.shutdown = False
         self.seen_entries = {}
@@ -30,19 +31,18 @@ class FeedFetcherThread(threading.Thread):
         entries = []
         for entry in feed.entries:
             if entry.id not in self.seen_entries:
-                msg = "%s (%s)" % (entry.title, entry.link)
+                msg = "[%s] %s - %s - %s" % (self.name, entry.author, entry.title, entry.link)
                 entries.append(msg.encode("utf-8"))
             self.seen_entries[entry.id] = True
         if self.first_flag:
             self.first_flag = False
-            # return
-        for entry in entries[:1]:
-            self.protocol.msg("#bosnobot", entry)
+            return
+        for entry in entries[:5]:
+            self.channel.msg(entry, True)
 
-class FeedFetcher(object):
-    def __init__(self, protocol):
-        url = "http://code.google.com/feeds/p/django-hotclub/svnchanges/basic"
-        self.feed_fetcher_thread = FeedFetcherThread(url, protocol)
+class ChannelFeedFetcher(object):
+    def __init__(self, channel, name, url):
+        self.feed_fetcher_thread = FeedFetcherThread(name, url, channel)
         self.feed_fetcher_thread.start()
     
     def stop(self):
