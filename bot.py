@@ -6,7 +6,7 @@ from feed_fetcher import ChannelFeedFetcher
 
 class PinaxBot(IrcBot):
     channels = [
-        Channel("#bosnobot"),
+        Channel("#django-hotclub"),
     ]
     
     feed_urls = {
