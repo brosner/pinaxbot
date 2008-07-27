@@ -7,6 +7,8 @@ from bosnobot.channel import Channel
 
 from feed_fetcher import ChannelFeedFetcher
 
+SVN_FEED_URL = "http://code.google.com/feeds/p/%s/svnchanges/basic"
+
 class PinaxBot(IrcBot):
     channels = [
         Channel("#django-hotclub"),
@@ -29,7 +31,8 @@ class PinaxBot(IrcBot):
         for url in urls:
             parts = urlparse.urlparse(url)
             bits = parts[1].split(".")
-            feed_urls[bits[0]] = "http://code.google.com/feeds/p/%s/svnchanges/basic" % bits[0]
+            feed_urls[bits[0]] = SVN_FEED_URL % bits[0]
+        feed_urls["pinax"] = SVN_FEED_URL % "django-hotclub"
         return feed_urls
     
     def parse_svn_externals(self):
