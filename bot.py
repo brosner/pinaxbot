@@ -42,7 +42,7 @@ class PinaxBot(IrcBot):
         self.feed_fetchers = []
         for name, url in self.feed_urls.items():
             self.feed_fetchers.append(
-                ChannelFeedFetcher(channel_pool.get("#bosnobot"), name, url))
+                ChannelFeedFetcher(channel_pool.get("#django-hotclub"), name, url))
     
     def shutdown(self):
         for feed_fetcher in self.feed_fetchers:
