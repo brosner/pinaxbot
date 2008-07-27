@@ -43,6 +43,7 @@ class FeedFetcherThread(threading.Thread):
 class ChannelFeedFetcher(object):
     def __init__(self, channel, name, url):
         self.feed_fetcher_thread = FeedFetcherThread(name, url, channel)
+        log.msg("Starting thread for %s [%s]" % (name, url))
         self.feed_fetcher_thread.start()
     
     def stop(self):
