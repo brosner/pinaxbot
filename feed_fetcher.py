@@ -32,6 +32,7 @@ class FeedFetcherThread(threading.Thread):
         for entry in feed.entries:
             if entry.id not in self.seen_entries:
                 msg = "[%s] %s - %s - %s" % (self.name, entry.author, entry.title, entry.link)
+                msg = msg.replace("\n", " ")
                 entries.append(msg.encode("utf-8"))
             self.seen_entries[entry.id] = True
         if self.first_flag:
