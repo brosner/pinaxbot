@@ -11,15 +11,16 @@ SVN_FEED_URL = "http://code.google.com/feeds/p/%s/svnchanges/basic"
 
 class PinaxBot(IrcBot):
     channels = [
-        Channel("#django-hotclub"),
+        Channel("#pinax"),
     ]
     
     def initialize(self):
         channel_pool = self.protocol.channel_pool
         self.feed_fetchers = []
         for name, url in self.get_feed_urls().items():
-            self.feed_fetchers.append(
-                ChannelFeedFetcher(channel_pool.get("#django-hotclub"), name, url))
+            self.feed_fetchers.append(ChannelFeedFetcher(
+                channel_pool.get("#pinax"), name, url
+            ))
     
     def shutdown(self):
         for feed_fetcher in self.feed_fetchers:
